@@ -45,10 +45,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
 
         List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilege));
+        createRoleIfNotFound("ADMIN", adminPrivileges);
+        createRoleIfNotFound("USER", Collections.singletonList(readPrivilege));
 
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role adminRole = roleRepository.findByName("ADMIN");
         User admin = new User("admin@isp.net", "P@ssword1");
         admin.setFirstName("admin");
         admin.setLastName("admin");
@@ -70,7 +70,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     }
 
     @Transactional
-    Role createRoleIfNotFound(String name, List<Privilege> privileges) {
+    private Role createRoleIfNotFound(String name, List<Privilege> privileges) {
 
         Role role = roleRepository.findByName(name);
         if (role == null) {
