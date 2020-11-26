@@ -9,8 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class MainController extends AbstractController{
-
+public class MainController extends AbstractController {
     @Autowired
     private UserService userService;
 
@@ -54,4 +53,8 @@ public class MainController extends AbstractController{
         return "redirect:/profile.html";
     }
 
+    @RequestMapping("/header.html")
+    public String header() {
+        return "header.html";
+    }
 }
