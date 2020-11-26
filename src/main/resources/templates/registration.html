@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Employee Management System</title>
+    <meta charset="ISO-8859-1">
+    <title>Employee Management System</title>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-	<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+	$(document).ready(function(){
+	$("#password-error").hide()
+        $( "#register-btn" ).click(function( event ) {
+            if (!($("#password").val() === $("#confirm-password").val())) {
+            	$("#password-error").show()
+                event.preventDefault();
+            }
+        });
+	});
+    </script>
 </head>
 <body data-new-gr-c-s-loaded="true">
 <div class="container">
-	Registration page
+    <form class="form-signin" method="post" th:action="@{/user}" th:object="${user}" action="#">
+        <h2 class="form-signin-heading">Registration</h2>
+        <p class="alert alert-danger" id="password-error">Passwords do not match.</p>
+        <p>
+            <label for="firstname" class="sr-only">Firstname:</label>
+            <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Firstname" required="" autofocus=""
+                   pattern="^[A-Za-z -]+$"
+                   title="Only alphabetic chars ale allowed"
+                   th:field="*{firstName}">
+        </p>
+        <p>
+            <label for="lastname" class="sr-only">Lastname:</label>
+            <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" required="" autofocus=""
+                   pattern="^[A-Za-z -]+$"
+                   title="Only alphabetic chars ale allowed"
+                   th:field="*{lastName}">
+        </p>
+        <p>
+            <label for="address" class="sr-only">Firstname:</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="Address" required="" autofocus=""
+                   th:field="*{address}">
+        </p>
+        <p>
+            <label for="email" class="sr-only">Firstname:</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="" autofocus=""
+                   th:field="*{username}">
+        </p>
+        <p>
+            <label for="password" class="sr-only">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="" autofocus=""
+                pattern="^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{6,12}$">
+        </p>
+        <p>
+            <label for="confirm-password" class="sr-only">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm Password" required=""
+                   pattern="^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{6,12}$">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="register-btn">Register</button>
+    </form>
+    <div class="form-signin">
+        <a class="btn btn-lg btn-block" type="submit" th:href="@{/login.html}">Cancel</a>
+    </div>
 </div>
 </body>
 </html>

@@ -18,7 +18,7 @@ public class User {
     private String role;
     private boolean enabled;
 
-    User() {}
+    public User() {}
 
     public User(String username, String password) {
         this.username = username;
@@ -63,7 +63,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = "{noop}" + password;
     }
 
     public String getUsername() {
