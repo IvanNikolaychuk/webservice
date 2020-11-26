@@ -19,6 +19,6 @@ public class UserService {
     }
 
     public User get(final String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email);
+        return userRepository.findByUsername(email);
     }
 }
