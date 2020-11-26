@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Homepage</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#header").load("/header.html");
+
+	    let searchParams = new URLSearchParams(window.location.search)
+	 	if(searchParams.has('messageSent')) {
+	 		$("#message-send").show()
+	 	} else {
+	 		$("#message-send").hide()
+	 	}
+	});
+</script>
+</head>
+<body>
+<div id="header"></div>
+<div class="container" th:object="${user}">
+	<h1 class="center">Support</h1>
+	<br><br>
+	<h1>Create a new ticket:</h1>
+	<br><br>
+	<form class="form-signin" method="post" th:action="@{/messages}" th:object="${newMessage}" action="#">
+		<p class="alert alert-success" id="message-send">Message was send</p>
+		<p>
+			<label class="sr-only">Name:</label>
+			<input th:object="${user}" type="email" class="email-field form-control" name="email" placeholder="Email" required="" autofocus=""
+				   th:field="*{firstName}" disabled>
+		</p>
+		<p>
+			<label class="sr-only">Name:</label>
+			<input th:object="${user}" type="text" class="email-field form-control" name="email" placeholder="Email" required="" autofocus=""
+				   th:field="*{username}" disabled>
+		</p>
+		<p>
+			<label class="sr-only">Subject:</label>
+			<input type="text" class="email-field form-control" name="subject" placeholder="Subject" required="" autofocus=""
+				   th:field="*{subject}">
+		</p>
+		<p>
+			<label class="sr-only">Message:</label>
+			<textarea class="email-field form-control" name="subject" placeholder="Message" required="" autofocus=""
+				   th:field="*{text}">
+			</textarea>
+		</p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+	</form>
+</div>
+
+</body>
+</html>

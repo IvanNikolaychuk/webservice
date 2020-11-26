@@ -28,6 +28,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<CreditCard> creditCards;
 
+    @OneToMany(cascade = { CascadeType.ALL })
+    private List<Message> messages;
+
     private boolean enabled;
 
     public User() {}
@@ -126,5 +129,13 @@ public class User {
 
     public void setCreditCards(Set<CreditCard> creditCards) {
         this.creditCards = creditCards;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }
