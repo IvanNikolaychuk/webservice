@@ -1,10 +1,8 @@
 package com.task.webservice.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +19,8 @@ public class User {
     private String username;
     private String birthday;
     private String role;
+    private Calendar lastLogin;
+    private Calendar lastProfileUpdate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Profile> profiles;
@@ -137,5 +137,29 @@ public class User {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public Calendar getLastLogin() {
+        return lastLogin;
+    }
+
+    public String getLastLoginString() {
+        return new SimpleDateFormat("dd/MM/yyyy hh:mm:sss aa").format(lastLogin.getTime());
+    }
+
+    public void recordLogin() {
+        this.lastLogin = Calendar.getInstance();
+    }
+
+    public Calendar getLastProfileUpdate() {
+        return lastProfileUpdate;
+    }
+
+    public String getLastProfileUpdateString() {
+        return lastProfileUpdate == null ? "No Updates yet" : new SimpleDateFormat("dd/MM/yyyy hh:mm:sss aa").format(lastProfileUpdate.getTime());
+    }
+
+    public void recordProfileUpdate() {
+        this.lastProfileUpdate = Calendar.getInstance();
     }
 }

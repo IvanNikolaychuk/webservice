@@ -19,21 +19,23 @@ public class UserProfileController extends AbstractController {
     @Autowired
     private ProfileService profileService;
 
-    @RequestMapping("/userProfile.html")
+    @RequestMapping(value = {"/userProfile.html", "/user-profile.html"})
     public String viewProfile(Model model) {
-        addUserAttribute(userService, model);
+        addCommonAttributes(userService, model);
         return "user-profile.html";
     }
 
     @RequestMapping(value = "/profileUpdate", method = RequestMethod.POST)
     public String profileUpdate(@ModelAttribute("profile") Profile updatedProfile) {
         profileService.updateProfileData(getCurrentUser(), updatedProfile);
+        userService.recordProfileUpdate(getCurrentUser());
         return "redirect:/user-profile.html";
     }
 
     @RequestMapping(value = "/profileDelete", method = RequestMethod.POST)
     public String profileDelete(@ModelAttribute("profile") Profile updatedProfile) {
         profileService.deleteProfileData(getCurrentUser(), updatedProfile);
+        userService.recordProfileUpdate(getCurrentUser());
         return "redirect:/user-profile.html";
     }
 }

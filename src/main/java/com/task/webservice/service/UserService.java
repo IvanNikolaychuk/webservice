@@ -54,4 +54,22 @@ public class UserService {
             userFromDb.setBirthday(updatedUser.getBirthday());
         }
     }
+
+    public void recordLogin(String userName) {
+        User userFromDb = userRepository.findByUsername(userName);
+
+        if (userFromDb != null) {
+            userFromDb.recordLogin();
+            userRepository.save(userFromDb);
+        }
+    }
+
+    public void recordProfileUpdate(String userName) {
+        User userFromDb = userRepository.findByUsername(userName);
+
+        if (userFromDb != null) {
+            userFromDb.recordProfileUpdate();
+            userRepository.save(userFromDb);
+        }
+    }
 }

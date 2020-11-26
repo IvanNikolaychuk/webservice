@@ -15,7 +15,7 @@ public class AbstractController {
     }
 
 
-    public void addUserAttribute(UserService userService, Model model) {
+    public void addCommonAttributes(UserService userService, Model model) {
         MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userService.get(user.getUsername()));
         model.addAttribute("newProfile", new Profile());

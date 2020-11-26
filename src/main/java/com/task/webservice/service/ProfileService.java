@@ -22,6 +22,27 @@ public class ProfileService {
         super();
     }
 
+
+    public Profile getDefaultBillingProfile(String userName) {
+        User userFromDb = userRepository.findByUsername(userName);
+
+        if (userFromDb != null) {
+            return userFromDb.getProfiles().stream().filter(Profile::isDefaultBillingAddress).findFirst().orElse(null);
+        }
+
+        return null;
+    }
+
+    public Profile getDefaultShippingProfile(String userName) {
+        User userFromDb = userRepository.findByUsername(userName);
+
+        if (userFromDb != null) {
+            return userFromDb.getProfiles().stream().filter(Profile::isDefaultShippingAddress).findFirst().orElse(null);
+        }
+
+        return null;
+    }
+
     public void updateProfileData(String userName, Profile updatedProfile) {
         User userFromDb = userRepository.findByUsername(userName);
 

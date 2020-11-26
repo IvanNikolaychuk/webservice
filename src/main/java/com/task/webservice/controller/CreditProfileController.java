@@ -21,7 +21,7 @@ public class CreditProfileController extends AbstractController {
 
     @RequestMapping(value = {"/creditProfile.html", "credit-profile.html"})
     public String viewProfile(Model model) {
-        addUserAttribute(userService, model);
+        addCommonAttributes(userService, model);
         return "/credit-profile.html";
     }
 

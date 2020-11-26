@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
+import static com.task.webservice.model.Message.Status.SENT;
 
 @Service
 @Transactional
@@ -28,7 +29,7 @@ public class MessageService {
 
         if (sender != null && message != null) {
             User receiver = randomAdminUser();
-            message.setRead(false);
+            message.setStatus(SENT);
             message.setSenderId(sender.getId());
             message.setReceiverId(receiver.getId());
 
@@ -39,6 +40,32 @@ public class MessageService {
             sender.getMessages().add(message);
             userRepository.save(sender);
         }
+    }
+
+    public long numberOfUnreadMessages(String userName) {
+        User user = userRepository.findByUsername(userName);
+
+        if (user != null && user.getMessages() != null) {
+            return user.getMessages()
+                    .stream()
+                    .filter(message -> message.getStatus() == Message.Status.UNREAD)
+                    .count();
+        }
+
+        return 0;
+    }
+
+    public long numberOfReadMessages(String userName) {
+        User user = userRepository.findByUsername(userName);
+
+        if (user != null && user.getMessages() != null) {
+            return user.getMessages()
+                    .stream()
+                    .filter(message -> message.getStatus() == Message.Status.READ)
+                    .count();
+        }
+
+        return 0;
     }
 
     private User randomAdminUser() {

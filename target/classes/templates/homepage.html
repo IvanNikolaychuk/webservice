@@ -53,16 +53,52 @@
 <body>
 
 <div id="header"></div>
-<div class="container" th:object="${user}">
+<div class="container" >
 	<h1 class="center">Dashboard</h1>
 
-	<b>Current Profile</b>
+	<div th:object="${user}">
+		<b class="h3">Current Profile</b>
+		<br><br>
+		<p class="list-group-item">First Name: <span th:text="*{firstName}"></span></p>
+		<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
+		<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
+		<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
+		<p class="list-group-item">Birthday: <span th:text="*{birthday == null} ? 'No data' : *{birthday == null}"></span></p>
+	</div>
 	<br><br>
-	<p class="list-group-item">First Name: <span th:text="*{firstName}"></span></p>
-	<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
-	<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
-	<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
+	<div th:object="${billingProfile}">
+		<b class="h3">Preferred Billing Address</b>
+		<br><br>
+		<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
+		<p class="list-group-item">Postal Code: <span th:text="*{postalCode == null} ? 'No data' : *{postalCode}"></span></p>
+	</div>
+	<br><br>
+	<div th:object="${shippingProfile}">
+		<b class="h3">Preferred Shipping Address</b>
+		<br><br>
+		<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
+		<p class="list-group-item">Postal Code: <span th:text="*{postalCode == null} ? 'No data' : *{postalCode}"></span></p>
+	</div>
 
+	<br><br>
+	<div th:object="${user}">
+		<b class="h3">Last Login Activity</b>
+		<br><br>
+		<p class="list-group-item">Date: <span th:text="${user.getLastLoginString()}"></span></p>
+	</div>
+	<br><br>
+	<div th:object="${user}">
+		<b class="h3">Last User Profile Update</b>
+		<br><br>
+		<p class="list-group-item">Date: <span th:text="${user.getLastProfileUpdateString()}"></span></p>
+	</div>
+	<br><br>
+	<div>
+		<b class="h3">Inbox</b>
+		<br><br>
+		<p class="list-group-item">Read messages: <span th:text="*{readMessagesCounter}"></span></p>
+		<p class="list-group-item">Unread messages: <span th:text="*{unreadMessagesCounter}"></span></p>
+	</div>
 </div>
 
 </body>

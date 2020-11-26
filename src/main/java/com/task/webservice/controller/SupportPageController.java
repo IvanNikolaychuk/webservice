@@ -21,7 +21,7 @@ public class SupportPageController extends AbstractController {
 
     @RequestMapping(value = {"/support.html", "/support"})
     public String viewSupportPage(Model model) {
-        addUserAttribute(userService, model);
+        addCommonAttributes(userService, model);
         return "support.html";
     }
 

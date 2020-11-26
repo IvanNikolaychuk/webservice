@@ -14,7 +14,7 @@ public class Message {
     private String text;
     private String subject;
     private String reply;
-    private boolean read;
+    private Status status;
 
     public Long getId() {
         return id;
@@ -48,12 +48,12 @@ public class Message {
         this.reply = reply;
     }
 
-    public boolean isRead() {
-        return read;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Long getReceiverId() {
@@ -70,5 +70,9 @@ public class Message {
 
     public void setSenderId(Long senderId) {
         this.senderId = senderId;
+    }
+
+    public enum Status {
+        SENT, READ, UNREAD
     }
 }
