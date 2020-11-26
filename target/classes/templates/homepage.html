@@ -58,8 +58,8 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">My Profile</a></li>
+				<li><a href="#" th:href="@{/homepage.html}">Home</a></li>
+				<li><a href="#" th:href="@{/profile.html}">My Profile</a></li>
 				<li><a href="#">Credit Profile</a></li>
 				<li><a href="#">Inbox</a></li>
 				<li><a href="#">Support</a></li>
@@ -75,9 +75,10 @@
 
 	<b>Current Profile</b>
 	<br><br>
-	<p class="list-group-item"><i>First Name: </i><span th:text="*{firstName}"></span></p>
+	<p class="list-group-item">First Name: <span th:text="*{firstName}"></span></p>
 	<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
 	<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
+	<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
 
 </div>
 

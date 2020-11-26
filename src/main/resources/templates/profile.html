@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Homepage</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		if ($(".delete-profile-btn").length == 1) {
+			$($(".delete-profile-btn")[0]).attr("disabled", true);
+		}
+	});
+	</script>
+	<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+
+    .center {
+    	text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a href="#" th:href="@{/homepage.html}">Home</a></li>
+				<li><a href="#" th:href="@{/profile.html}">My Profile</a></li>
+				<li><a href="#">Credit Profile</a></li>
+				<li><a href="#">Inbox</a></li>
+				<li><a href="#">Support</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container" th:object="${user}">
+	<h1 class="center">My Profile</h1>
+
+	<form class="form-signin" method="post" th:action="@{/userDataUpdate}" th:object="${user}" action="#">
+		<h2 class="form-signin-heading">Information shared between all profiles:</h2>
+		<p>
+			<label for="firstname" class="sr-only">Firstname:</label>
+			<input type="text" id="firstname" name="firstname" class="form-control" placeholder="Firstname" required="" autofocus=""
+				   pattern="^[A-Za-z -]+$"
+				   title="Only alphabetic chars are allowed"
+				   th:field="*{firstName}">
+		</p>
+		<p>
+			<label for="lastname" class="sr-only">Lastname:</label>
+			<input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" required="" autofocus=""
+				   pattern="^[A-Za-z -]+$"
+				   title="Only alphabetic chars ale allowed"
+				   th:field="*{lastName}">
+		</p>
+		<p>
+			<label for="birthday" class="sr-only">Date Of Birth:</label>
+			<input type="date" id="birthday" name="birthday" class="form-control" placeholder="Birth:" required="" autofocus=""
+				   th:field="*{birthday}">
+		</p>
+		<p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" id="common-profile-data-update">Update for all profiles</button>
+	</form>
+
+	<br><br>
+	<h1>Profiles:</h1>
+	<br><br>
+	<tr th:each="profile : ${user.profiles}" th:object="${profile}">
+		<form class="form-signin" method="post" th:action="@{/profileUpdate}" action="#">
+			<p>
+				<label class="sr-only">Email:</label>
+				<input type="hidden" class="form-control" name="id" th:value="${profile.id}">
+				<input type="email" class="email-field form-control" name="email" placeholder="Email" required="" autofocus=""
+					   th:value="${profile.email}">
+			</p>
+			<p>
+				<label class="sr-only">Postal Code:</label>
+				<input type="text" class="postcode-field form-control" name="postalCode" placeholder="Postal Code" required="" autofocus=""
+					   th:value="${profile.postalCode}">
+			</p>
+			<p>
+				<label class="sr-only">Address:</label>
+				<input type="text" class="address-field form-control" name="postalCode" placeholder="Address" required="" autofocus=""
+					   th:value="${profile.address}">
+			</p>
+			<p><input type="checkbox" name="defaultBillingAddress" th:checked="${profile.defaultBillingAddress}"> Default Billing Address</p>
+			<p><input type="checkbox" name="defaultShippingAddress" th:checked="${profile.defaultShippingAddress}"> Default Shipping Address</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+		</form>
+		<form class="form-signin" method="post" th:action="@{/profileDelete}" action="#">
+			<br>
+			<input type="hidden" class="form-control" name="id" th:value="${profile.id}">
+			<button class="btn btn-lg btn-danger btn-block delete-profile-btn" type="submit">Delete</button>
+			<br>
+			<br>
+		</form>
+	</tr>
+
+	<b>Create a new profile</b><br><br>
+	<form class="form-signin" method="post" th:action="@{/profileUpdate}" th:object="${newProfile}" action="#">
+		<p>
+			<label class="sr-only">Email:</label>
+			<input type="email" class="email-field form-control" name="email" placeholder="Email" required="" autofocus=""
+				   th:field="*{email}">
+		</p>
+		<p>
+			<label class="sr-only">Postal Code:</label>
+			<input type="text" class="postcode-field form-control" name="postcode-field" placeholder="Postal Code" required="" autofocus=""
+				   th:field="*{postalCode}">
+		</p>
+		<p>
+			<label class="sr-only">Address:</label>
+			<input type="text" class="address-field form-control" name="postalCode" placeholder="Address" required="" autofocus=""
+				   th:field="*{address}">
+		</p>
+		<p><input type="checkbox" name="default-billing" th:field="*{defaultBillingAddress}"> Default Billing Address</p>
+		<p><input type="checkbox" name="default-shipping" th:field="*{defaultShippingAddress}"> Default Shipping Address</p>
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Add new profile</button>
+	</form>
+</div>
+
+</body>
+</html>

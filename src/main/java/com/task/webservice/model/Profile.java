@@ -16,6 +16,16 @@ public class Profile {
     boolean defaultBillingAddress;
     boolean defaultShippingAddress;
 
+    public static Profile defaultFor(User user) {
+        Profile profile = new Profile();
+        profile.setDefaultShippingAddress(true);
+        profile.setDefaultBillingAddress(true);
+        profile.setAddress(user.getAddress());
+        profile.setEmail(user.getUsername());
+
+        return profile;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,5 +64,13 @@ public class Profile {
 
     public void setDefaultShippingAddress(boolean defaultShippingAddress) {
         this.defaultShippingAddress = defaultShippingAddress;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

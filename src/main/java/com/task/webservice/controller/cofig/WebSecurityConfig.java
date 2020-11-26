@@ -2,6 +2,7 @@ package com.task.webservice.controller.cofig;
 
 import com.task.webservice.model.User;
 import com.task.webservice.repository.UserRepository;
+import com.task.webservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private DataSource dataSource;
@@ -31,15 +32,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         admin.setRole("ADMIN");
         admin.setFirstName("admin");
         admin.setLastName("admin");
+        admin.setAddress("address");
 
-        userRepository.save(admin);
+        userService.saveNewUser(admin);
 
         User user = new User("user", "{noop}user");
         user.setRole("USER");
         user.setFirstName("user");
         user.setLastName("user");
+        user.setAddress("address");
 
-        userRepository.save(user);
+        userService.saveNewUser(user);
 
         auth.jdbcAuthentication()
                 .dataSource(dataSource);
