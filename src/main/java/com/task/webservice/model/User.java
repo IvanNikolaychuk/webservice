@@ -2,7 +2,9 @@ package com.task.webservice.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +25,9 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Profile> profiles;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<CreditCard> creditCards;
+
     private boolean enabled;
 
     public User() {}
@@ -32,6 +37,7 @@ public class User {
         this.password = password;
         this.enabled = true;
         profiles = new ArrayList<>();
+        creditCards = new HashSet<>();
     }
 
     public Long getId() {
@@ -112,5 +118,13 @@ public class User {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public Set<CreditCard> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(Set<CreditCard> creditCards) {
+        this.creditCards = creditCards;
     }
 }

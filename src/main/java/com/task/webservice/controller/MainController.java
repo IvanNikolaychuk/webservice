@@ -50,7 +50,7 @@ public class MainController extends AbstractController {
     @RequestMapping(value = "/userDataUpdate", method = RequestMethod.POST)
     public String userDataUpdate(@ModelAttribute("user") User updatedUser) {
         userService.updateUserDate(getCurrentUser(), updatedUser);
-        return "redirect:/profile.html";
+        return "redirect:/user-profile.html";
     }
 
     @RequestMapping("/header.html")

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Homepage</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$(document).ready(function(){
+			$("#header").load("/header.html");
+		});
+
+		if ($(".delete-card-btn").length == 1) {
+			$($(".delete-card-btn")[0]).attr("disabled", true);
+		}
+	});
+	</script>
+</head>
+<body>
+<div id="header"></div>
+<div class="container" th:object="${user}">
+	<h1 class="center">Credit information profile</h1>
+
+	<tr th:each="creditCard : ${user.creditCards}" th:object="${creditCard}">
+		<form class="form-signin" method="post" th:action="@{/creditCardUpdate}" action="#">
+			<input type="hidden" class="form-control" name="id" th:value="${creditCard.id}">
+			<p>
+				<label for="expirationDate" class="sr-only">Expiration Date:</label>
+				<input type="month" id="expirationDate" name="expirationDate" class="form-control" placeholder="Expiration date:" required="" autofocus=""
+					   th:value="${creditCard.expirationDate}">
+			</p>
+			<p>
+				<label class="sr-only">Card Holder Name:</label>
+				<input type="text" class="postcode-field form-control" name="cardHolder" placeholder="Card Holder Name:" required="" autofocus=""
+					   th:value="${creditCard.cardHolder}">
+			</p>
+			<p>
+				<label class="sr-only">Credit Card Number:</label>
+				<input type="number" class="postcode-field form-control" name="cardNumber" placeholder="Credit Card Number:" required="" autofocus=""
+					   th:value="${creditCard.cardNumber}">
+			</p>
+			<p><input type="checkbox" name="defaultCard" th:checked="${creditCard.defaultCard}"> Save as Default or prefered</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+		</form>
+		<form class="form-signin" method="post" th:action="@{/creditCardDelete}" action="#">
+			<br>
+			<input type="hidden" class="form-control" name="id" th:value="${creditCard.id}">
+			<button class="btn btn-lg btn-danger btn-block delete-card-btn" type="submit">Delete</button>
+			<br>
+			<br>
+		</form>
+	</tr>
+
+	<b>Add a new card</b><br><br>
+	<form class="form-signin" method="post" th:action="@{/creditCardUpdate}" th:object="${newCard}" action="#">
+		<p>
+			<label for="expirationDate" class="sr-only">Expiration Date:</label>
+			<input type="month" name="expirationDate" class="form-control" placeholder="Expiration date:" required="" autofocus=""
+				   th:field="*{expirationDate}">
+		</p>
+		<p>
+			<label class="sr-only">Card Holder Name:</label>
+			<input type="text" class="postcode-field form-control" name="cardHolder" placeholder="Card Holder Name:" required="" autofocus=""
+				   th:field="*{cardHolder}">
+		</p>
+		<p>
+			<label class="sr-only">Credit Card Number:</label>
+			<input type="number" class="postcode-field form-control" name="cardNumber" placeholder="Credit Card Number:" required="" autofocus=""
+				   th:field="*{cardNumber}">
+		</p>
+		<p><input type="checkbox" name="defaultCard" th:checked="*{defaultCard}"> Save as Default or prefered</p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Add new card</button>
+	</form>
+</div>
+
+</body>
+</html>

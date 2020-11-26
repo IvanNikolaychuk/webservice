@@ -1,6 +1,7 @@
 package com.task.webservice.controller;
 
 import com.task.webservice.controller.cofig.MyUserDetails;
+import com.task.webservice.model.CreditCard;
 import com.task.webservice.model.Profile;
 import com.task.webservice.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,5 +18,6 @@ public class AbstractController {
         MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userService.get(user.getUsername()));
         model.addAttribute("newProfile", new Profile());
+        model.addAttribute("newCard", new CreditCard());
     }
 }
