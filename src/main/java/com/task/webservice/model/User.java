@@ -1,6 +1,8 @@
 package com.task.webservice.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +18,10 @@ public class User {
     private String password;
     private String username;
     private String role;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Profile> profiles;
+
     private boolean enabled;
 
     public User() {}
@@ -24,6 +30,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.enabled = true;
+        profiles = new ArrayList<>();
     }
 
     public Long getId() {
@@ -88,5 +95,13 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 }

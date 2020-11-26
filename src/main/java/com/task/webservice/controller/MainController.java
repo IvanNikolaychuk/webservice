@@ -1,10 +1,12 @@
 package com.task.webservice.controller;
 
+import com.task.webservice.controller.cofig.MyUserDetails;
 import com.task.webservice.model.Employee;
 import com.task.webservice.model.User;
 import com.task.webservice.service.EmailService;
 import com.task.webservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +43,12 @@ public class MainController {
 		}
 
 		return "redirect:/";
+	}
+
+	@RequestMapping("/homepage.html")
+	public String homepage(Model model) {
+		MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		model.addAttribute("user", user);
+		return "homepage.html";
 	}
 }
