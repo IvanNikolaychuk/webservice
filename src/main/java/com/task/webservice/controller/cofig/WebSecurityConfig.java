@@ -34,6 +34,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         userRepository.save(admin);
 
+        User user = new User("user", "{noop}user");
+        user.setRole("USER");
+        user.setFirstName("user");
+        user.setLastName("user");
+
+        userRepository.save(user);
+
         auth.jdbcAuthentication()
                 .dataSource(dataSource);
 
@@ -46,9 +53,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/login*").permitAll()
+                .antMatchers("/registration*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login.html")
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/homepage.html", true)
                 .failureUrl("/login.html?error=true")

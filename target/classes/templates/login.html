@@ -8,18 +8,35 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-	
+	<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
 </head>
-<body>
-
-	<h1>Login page</h1>
-	<p th:if="${loginError}" class="error">Wrong user or password</p>
-	<form th:action="@{/login}" method="post">
-		<label for="username">Username</label>:
-		<input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-		<label for="password">Password</label>:
-		<input type="password" id="password" name="password" /> <br />
-		<input type="submit" value="Log in" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+	    let searchParams = new URLSearchParams(window.location.search)
+	 	if(searchParams.has('error')) {
+	 		$("#wrong-credentials").show()
+	 	} else {
+	 		$("#wrong-credentials").hide()
+	 	}
+	});
+</script>
+<body data-new-gr-c-s-loaded="true">
+<div class="container">
+	<form class="form-signin" method="post" action="/perform_login">
+		<h2 class="form-signin-heading">Log in</h2>
+		<p class="alert alert-danger" id="wrong-credentials">Wrong user or password</p>
+		<p>
+			<label for="username" class="sr-only">Username</label>
+			<input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+		</p>
+		<p>
+			<label for="password" class="sr-only">Password</label>
+			<input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+		</p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 	</form>
+	<a class="btn btn-lg btn-block" type="submit" th:href ="@{/registration.html}">Registration</a>
+</div>
 </body>
 </html>
