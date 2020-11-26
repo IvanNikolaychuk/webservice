@@ -2,6 +2,7 @@ package com.task.webservice.controller;
 
 import com.task.webservice.model.Employee;
 import com.task.webservice.model.User;
+import com.task.webservice.service.EmailService;
 import com.task.webservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,9 @@ public class MainController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private EmailService emailService;
 
 	@RequestMapping("/login.html")
 	public String login() {
@@ -30,7 +34,11 @@ public class MainController {
 	public String saveUser(@ModelAttribute("employee") User user) {
 		user.setRole("USER");
 		user.setEnabled(true);
-		userService.save(user);
+
+		if (userService.get(user.getUsername()) == null) {
+			userService.save(user);
+			emailService.sendEmailUponUserRegistration(user);
+		}
 
 		return "redirect:/";
 	}
