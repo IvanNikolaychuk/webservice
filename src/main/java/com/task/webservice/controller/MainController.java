@@ -21,7 +21,7 @@ public class MainController extends AbstractController {
     @Autowired
     private ProfileService profileService;
 
-    @RequestMapping("/login.html")
+    @RequestMapping(value = {"/login.html", "/login"})
     public String login() {
         return "login.html";
     }

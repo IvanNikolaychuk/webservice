@@ -30,12 +30,12 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
-        user.setRole("USER");
-        user.setEnabled(true);
-
         if (userService.get(user.getUsername()) == null) {
+            user.setRole("USER");
+            user.setEnabled(true);
             userService.saveNewUser(user);
             emailService.sendEmailUponUserRegistration(user);
+            return "redirect:/";
         }
 
         return "redirect:/";
