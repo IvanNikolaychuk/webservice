@@ -1,5 +1,6 @@
 package com.task.webservice.controller.cofig;
 
+import com.task.webservice.model.Role;
 import com.task.webservice.model.User;
 import com.task.webservice.repository.UserRepository;
 import com.task.webservice.service.UserService;
@@ -29,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
 
         User admin = new User("admin@isp.net", "{noop}P@ssword1");
-        admin.setRole("ADMIN");
+        admin.setRole(Role.ROLE_ADMIN.name());
         admin.setFirstName("admin");
         admin.setLastName("admin");
         admin.setAddress("address");
@@ -37,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         userService.saveNewUser(admin);
 
         User user = new User("user", "{noop}user");
-        user.setRole("USER");
+        user.setRole(Role.ROLE_USER.name());
         user.setFirstName("user");
         user.setLastName("user");
         user.setAddress("address");

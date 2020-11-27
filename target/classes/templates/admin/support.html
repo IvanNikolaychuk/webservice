@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Support</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+		$(document).ready(function(){
+			$("#header").load("/admin-header.html");
+        	$("#password-error").hide()
+            $( "#register-btn" ).click(function( event ) {
+                if (!($("#password").val() === $("#confirm-password").val())) {
+            	    $("#password-error").show()
+                    event.preventDefault();
+                }
+            });
+		});
+    </script>
+</head>
+<body>
+
+<div id="header"></div>
+<div class="container">
+    <h1 class="center">Support</h1>
+    <div>
+        <b class="h3">Admin List</b>
+        <br><br>
+        <tr th:each="user : ${users}" th:object="${users}">
+            <p class="list-group-item"> Email: <span th:text="${user.username}"></span></p>
+            <p class="list-group-item"> First Name: <span th:text="${user.firstName}"></span></p>
+            <p class="list-group-item"> Second Name: <span th:text="${user.lastName}"></span></p>
+            <br><br>
+        </tr>
+    </div>
+    <div>
+        <b class="h3">Add New Admin</b>
+        <br><br>
+        <form class="form-signin" method="post" th:action="@{/addAdmin}" th:object="${newAdmin}" action="#">
+            <h2 class="form-signin-heading">Registration</h2>
+            <p class="alert alert-danger" id="password-error">Passwords do not match.</p>
+            <p>
+                <label for="firstname" class="sr-only">Firstname:</label>
+                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Firstname" required="" autofocus=""
+                       pattern="^[A-Za-z -]+$"
+                       title="Only alphabetic chars ale allowed"
+                       th:field="*{firstName}">
+            </p>
+            <p>
+                <label for="lastname" class="sr-only">Lastname:</label>
+                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" required="" autofocus=""
+                       pattern="^[A-Za-z -]+$"
+                       title="Only alphabetic chars ale allowed"
+                       th:field="*{lastName}">
+            </p>
+            <p>
+                <label for="address" class="sr-only">Firstname:</label>
+                <input type="text" id="address" name="address" class="form-control" placeholder="Address" required="" autofocus=""
+                       th:field="*{address}">
+            </p>
+            <p>
+                <label for="email" class="sr-only">Firstname:</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required="" autofocus=""
+                       th:field="*{username}">
+            </p>
+            <p>
+                <label for="password" class="sr-only">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="" autofocus=""
+                       pattern="^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{6,12}$">
+            </p>
+            <p>
+                <label for="confirm-password" class="sr-only">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm Password" required=""
+                       pattern="^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{6,12}$">
+            </p>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" id="register-btn">Register</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

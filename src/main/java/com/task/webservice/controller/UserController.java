@@ -1,5 +1,6 @@
 package com.task.webservice.controller;
 
+import com.task.webservice.model.Role;
 import com.task.webservice.model.User;
 import com.task.webservice.service.EmailService;
 import com.task.webservice.service.UserService;
@@ -28,7 +29,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
         if (userService.findByEmail(user.getUsername()) == null) {
-            user.setRole("USER");
+            user.setRole(Role.ROLE_USER.name());
             user.setEnabled(true);
             userService.saveNewUser(user);
             emailService.sendEmailUponUserRegistration(user);

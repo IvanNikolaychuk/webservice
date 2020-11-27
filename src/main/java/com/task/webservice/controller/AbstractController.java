@@ -33,5 +33,6 @@ public class AbstractController {
         model.addAttribute("newProfile", new Profile());
         model.addAttribute("newCard", new CreditCard());
         model.addAttribute("newMessage", new Message());
+        model.addAttribute("newAdmin", new User());
     }
 }

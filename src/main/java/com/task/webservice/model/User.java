@@ -96,7 +96,7 @@ public class User {
     }
 
     public void setRole(String role) {
-        this.role = "ROLE_" + role;
+        this.role = role;
     }
 
     public boolean isEnabled() {
