@@ -96,7 +96,7 @@ public class User {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = "ROLE_" + role;
     }
 
     public boolean isEnabled() {
@@ -161,5 +161,9 @@ public class User {
 
     public void recordProfileUpdate() {
         this.lastProfileUpdate = Calendar.getInstance();
+    }
+
+    public boolean isAdmin() {
+        return role.equals(Role.ROLE_ADMIN.name());
     }
 }

@@ -72,6 +72,10 @@ public class Message {
         this.senderId = senderId;
     }
 
+    public boolean isReplied() {
+        return reply != null;
+    }
+
     public enum Status {
         SENT, READ, UNREAD
     }

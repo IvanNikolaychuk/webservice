@@ -27,7 +27,7 @@ public class SupportPageController extends AbstractController {
 
     @RequestMapping(value = "/messages", method = RequestMethod.POST)
     public String addMessage(@ModelAttribute("profile") Message message) {
-        messageService.save(getCurrentUser(), message);
+        messageService.save(getCurrentUserName(), message);
         return "redirect:/support.html?messageSent=true";
     }
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Homepage</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+
+    .center {
+    	text-align: center;
+    }
+  </style>
+	<script>
+		$(document).ready(function(){
+			$("#header").load("/admin-header.html");
+		});
+	</script>
+</head>
+<body>
+
+<div id="header"></div>
+<div class="container">
+	<h1 class="center">Dashboard</h1>
+
+	<div th:object="${user}">
+		<b class="h3">Last Login Activity</b>
+		<br><br>
+		<p class="list-group-item">Date: <span th:text="${user.getLastLoginString()}"></span></p>
+	</div>
+	<br><br>
+	<div th:object="${users}">
+		<b class="h3">Number of Registered Users</b>
+		<br><br>
+		<p class="list-group-item">Counter: <span th:text="${#lists.size(users)}"></span></p>
+	</div>
+	<br><br>
+	<div>
+		<b class="h3">Inbox</b>
+		<br><br>
+		<p class="list-group-item">Answered messages: <span th:text="*{answeredMessagesCounter}"></span></p>
+		<p class="list-group-item">Unanswered messages: <span th:text="*{unansweredMessagesCounter}"></span></p>
+	</div>
+	<br><br>
+	<div th:object="${user}">
+		<b class="h3">Current Profile</b>
+		<br><br>
+		<p class="list-group-item">First Name: <span th:text="*{firstName}"></span></p>
+		<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
+		<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
+	</div>
+	<br><br>
+	<div>
+		<b class="h3">Registered Users List</b>
+		<br><br>
+		<tr th:each="user : ${users}" th:object="${users}">
+			<p class="list-group-item">
+				<span th:text="${user.firstName}"></span>
+				<span th:text="${user.lastName}"></span>
+				<span th:text="${user.username}"></span>
+			</p>
+		</tr>
+	</div>
+</div>
+
+</body>
+</html>

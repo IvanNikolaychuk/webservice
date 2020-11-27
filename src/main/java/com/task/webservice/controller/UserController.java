@@ -1,13 +1,10 @@
 package com.task.webservice.controller;
 
-import com.task.webservice.model.Profile;
 import com.task.webservice.model.User;
 import com.task.webservice.service.EmailService;
-import com.task.webservice.service.ProfileService;
 import com.task.webservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +20,8 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value = "/userDataUpdate", method = RequestMethod.POST)
     public String userDataUpdate(@ModelAttribute("user") User updatedUser) {
-        userService.updateUserDate(getCurrentUser(), updatedUser);
-        userService.recordProfileUpdate(getCurrentUser());
+        userService.updateUserDate(getCurrentUserName(), updatedUser);
+        userService.recordProfileUpdate(getCurrentUserName());
         return "redirect:/user-profile.html";
     }
 

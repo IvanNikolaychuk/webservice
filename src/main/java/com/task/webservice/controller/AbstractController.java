@@ -4,14 +4,23 @@ import com.task.webservice.controller.cofig.MyUserDetails;
 import com.task.webservice.model.CreditCard;
 import com.task.webservice.model.Message;
 import com.task.webservice.model.Profile;
+import com.task.webservice.model.User;
 import com.task.webservice.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 public class AbstractController {
 
-    public String getCurrentUser() {
+    public String getCurrentUserName() {
         return ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    }
+
+    public void logout() {
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+    }
+
+    public User getCurrentUser(UserService userService) {
+        return userService.get(getCurrentUserName());
     }
 
 

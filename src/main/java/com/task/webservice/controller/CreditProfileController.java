@@ -27,13 +27,13 @@ public class CreditProfileController extends AbstractController {
 
     @RequestMapping(value = "/creditCardUpdate", method = RequestMethod.POST)
     public String profileUpdate(@ModelAttribute("creditCard") CreditCard creditCard) {
-        creditCardService.updateCreditCardData(getCurrentUser(), creditCard);
+        creditCardService.updateCreditCardData(getCurrentUserName(), creditCard);
         return "redirect:/credit-profile.html";
     }
 
     @RequestMapping(value = "/creditCardDelete", method = RequestMethod.POST)
     public String profileDelete(@ModelAttribute("creditCard") CreditCard creditCard) {
-        creditCardService.deleteCreditData(getCurrentUser(), creditCard);
+        creditCardService.deleteCreditData(getCurrentUserName(), creditCard);
         return "redirect:/credit-profile.html";
     }
 }

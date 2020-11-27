@@ -27,15 +27,15 @@ public class UserProfileController extends AbstractController {
 
     @RequestMapping(value = "/profileUpdate", method = RequestMethod.POST)
     public String profileUpdate(@ModelAttribute("profile") Profile updatedProfile) {
-        profileService.updateProfileData(getCurrentUser(), updatedProfile);
-        userService.recordProfileUpdate(getCurrentUser());
+        profileService.updateProfileData(getCurrentUserName(), updatedProfile);
+        userService.recordProfileUpdate(getCurrentUserName());
         return "redirect:/user-profile.html";
     }
 
     @RequestMapping(value = "/profileDelete", method = RequestMethod.POST)
     public String profileDelete(@ModelAttribute("profile") Profile updatedProfile) {
-        profileService.deleteProfileData(getCurrentUser(), updatedProfile);
-        userService.recordProfileUpdate(getCurrentUser());
+        profileService.deleteProfileData(getCurrentUserName(), updatedProfile);
+        userService.recordProfileUpdate(getCurrentUserName());
         return "redirect:/user-profile.html";
     }
 }

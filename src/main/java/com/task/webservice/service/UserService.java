@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -71,5 +72,9 @@ public class UserService {
             userFromDb.recordProfileUpdate();
             userRepository.save(userFromDb);
         }
+    }
+
+    public List<User> findByRole(String role) {
+        return userRepository.findByRole(role);
     }
 }
