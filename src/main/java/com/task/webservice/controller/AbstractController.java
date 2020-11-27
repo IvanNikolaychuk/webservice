@@ -20,7 +20,7 @@ public class AbstractController {
     }
 
     public User getCurrentUser(UserService userService) {
-        return userService.get(getCurrentUserName());
+        return userService.findByEmail(getCurrentUserName());
     }
 
     public boolean isAdmin(UserService userService) {
@@ -29,7 +29,7 @@ public class AbstractController {
 
     public void addCommonAttributes(UserService userService, Model model) {
         MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userService.get(user.getUsername()));
+        model.addAttribute("user", userService.findByEmail(user.getUsername()));
         model.addAttribute("newProfile", new Profile());
         model.addAttribute("newCard", new CreditCard());
         model.addAttribute("newMessage", new Message());

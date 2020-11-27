@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,7 +23,7 @@ public class UserService {
         super();
     }
 
-    public User get(final String email) throws UsernameNotFoundException {
+    public User findByEmail(final String email) throws UsernameNotFoundException {
         return userRepository.findByUsername(email);
     }
 
@@ -79,5 +80,18 @@ public class UserService {
 
     public List<User> findByRole(String role) {
         return userRepository.findByRole(role);
+    }
+
+    public List<User> findAllExceptCurrent(String userName) {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> !user.getUsername().equals(userName))
+                .collect(Collectors.toList());
+    }
+
+    public void remove(User user) {
+        if (user != null) {
+            userRepository.delete(user);
+        }
     }
 }

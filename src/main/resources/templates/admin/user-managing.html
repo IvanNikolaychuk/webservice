@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>User Managing</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#header").load("/admin-header.html");
+		});
+	</script>
+</head>
+<body>
+
+<div id="header"></div>
+<div class="container" th:object="${users}">
+	<h1 class="center">User Listing</h1>
+	<br><br>
+
+	<tr th:each="user : ${users}" th:object="${user}">
+		<form class="form-signin" method="post" th:action="@{/removeUser}" action="#">
+			<input name="username" th:value="${user.username}" hidden>
+			<p class="list-group-item">
+				Email: <span th:text="${user.username}"></span>
+			</p>
+			<p class="list-group-item">
+				Role: <span th:text="${user.role}"></span>
+			</p>
+			<br><br>
+			<button class="btn btn-lg btn-danger btn-block" type="submit">Delete</button>
+		</form>
+	</tr>
+</div>
+
+</body>
+</html>

@@ -27,7 +27,7 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
-        if (userService.get(user.getUsername()) == null) {
+        if (userService.findByEmail(user.getUsername()) == null) {
             user.setRole("USER");
             user.setEnabled(true);
             userService.saveNewUser(user);
