@@ -39,7 +39,6 @@
         <b class="h3">Add New Admin</b>
         <br><br>
         <form class="form-signin" method="post" th:action="@{/addAdmin}" th:object="${newAdmin}" action="#">
-            <h2 class="form-signin-heading">Registration</h2>
             <p class="alert alert-danger" id="password-error">Passwords do not match.</p>
             <p>
                 <label for="firstname" class="sr-only">Firstname:</label>
@@ -75,7 +74,7 @@
                 <input type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm Password" required=""
                        pattern="^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{6,12}$">
             </p>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" id="register-btn">Register</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" id="register-btn">Add new admin</button>
         </form>
 
     </div>
