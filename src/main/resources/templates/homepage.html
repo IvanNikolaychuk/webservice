@@ -63,7 +63,7 @@
 		<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
 		<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
 		<p class="list-group-item">Address: <span th:text="*{address}"></span></p>
-		<p class="list-group-item">Birthday: <span th:text="*{birthday == null} ? 'No data' : *{birthday == null}"></span></p>
+		<p class="list-group-item">Birthday: <span th:text="*{birthday == null} ? 'No data' : *{birthday}"></span></p>
 	</div>
 	<br><br>
 	<div th:object="${billingProfile}">

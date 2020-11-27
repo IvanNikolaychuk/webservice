@@ -54,6 +54,9 @@ public class UserService {
         if (updatedUser.getBirthday() != null) {
             userFromDb.setBirthday(updatedUser.getBirthday());
         }
+        if (updatedUser.getUsername() != null) {
+            userFromDb.setBirthday(updatedUser.getUsername());
+        }
     }
 
     public void recordLogin(String userName) {

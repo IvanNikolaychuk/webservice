@@ -23,6 +23,9 @@ public class AbstractController {
         return userService.get(getCurrentUserName());
     }
 
+    public boolean isAdmin(UserService userService) {
+        return getCurrentUser(userService).isAdmin();
+    }
 
     public void addCommonAttributes(UserService userService, Model model) {
         MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

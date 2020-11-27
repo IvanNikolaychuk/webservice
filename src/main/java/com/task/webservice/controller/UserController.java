@@ -22,7 +22,7 @@ public class UserController extends AbstractController {
     public String userDataUpdate(@ModelAttribute("user") User updatedUser) {
         userService.updateUserDate(getCurrentUserName(), updatedUser);
         userService.recordProfileUpdate(getCurrentUserName());
-        return "redirect:/user-profile.html";
+        return isAdmin(userService) ? "redirect:/admin-profile.html" : "redirect:/user-profile.html";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)

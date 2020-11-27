@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>My Profile</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+
+    .center {
+    	text-align: center;
+    }
+  </style>
+	<script>
+		$(document).ready(function(){
+			$("#header").load("/admin-header.html");
+		});
+	</script>
+</head>
+<body>
+
+<div id="header"></div>
+<div class="container" th:object="${user}">
+	<h1 class="center">My Profile</h1>
+
+	<form class="form-signin" method="post" th:action="@{/userDataUpdate}" action="#">
+		<h2 class="form-signin-heading">Main information:</h2>
+		<br><br>
+		<p>
+			<label for="firstname" class="sr-only">Firstname:</label>
+			<input type="text" id="firstname" name="firstname" class="form-control" placeholder="Firstname" required="" autofocus=""
+				   pattern="^[A-Za-z -]+$"
+				   title="Only alphabetic chars are allowed"
+				   th:field="*{firstName}">
+		</p>
+		<p>
+			<label for="lastname" class="sr-only">Lastname:</label>
+			<input type="text" id="lastname" name="lastname" class="form-control" placeholder="Lastname" required="" autofocus=""
+				   pattern="^[A-Za-z -]+$"
+				   title="Only alphabetic chars ale allowed"
+				   th:field="*{lastName}">
+		</p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" id="common-profile-data-update">Update</button>
+	</form>
+	<br><br>
+	<h2 class="form-signin-heading">Profile information:</h2>
+	<br><br>
+	<tr th:each="profile : ${user.profiles}" th:object="${profile}">
+		<form class="form-signin" method="post" th:action="@{/profileUpdate}" action="#">
+			<p>
+				<label class="sr-only">Email:</label>
+				<input type="hidden" class="form-control" name="id" th:value="${profile.id}">
+				<input type="email" class="email-field form-control" name="email" placeholder="Email" required="" autofocus=""
+					   th:value="${profile.email}">
+			</p>
+			<p>
+				<label class="sr-only">Postal Code:</label>
+				<input type="text" class="postcode-field form-control" name="postalCode" placeholder="Postal Code" required="" autofocus=""
+					   th:value="${profile.postalCode}">
+			</p>
+			<p>
+				<label class="sr-only">Address:</label>
+				<input type="text" class="address-field form-control" name="address" placeholder="Address" required="" autofocus=""
+					   th:value="${profile.address}">
+			</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+		</form>
+	</tr>
+	<br><br>
+	<br><br>
+	<div th:object="${user}">
+		<b class="h3">Current Profile</b>
+		<br><br>
+		<p class="list-group-item">First Name: <span th:text="*{firstName}"></span></p>
+		<p class="list-group-item">Last Name: <span th:text="*{lastName}"></span></p>
+		<p class="list-group-item">Email: <span th:text="*{username}"></span></p>
+		<tr th:each="profile : ${user.profiles}" th:object="${profile}">
+			<p class="list-group-item">Postal Code: <span th:text="*{postalCode == null} ? 'No data' : *{postalCode}"></span></p>
+			<p class="list-group-item">Address: <span th:text="*{address == null} ? 'No data' : *{address}"></span></p>
+
+		</tr>
+	</div>
+
+</div>
+
+</body>
+</html>

@@ -44,7 +44,7 @@ public class MainController extends AbstractController {
         addCommonAttributes(userService, model);
         userService.recordLogin(getCurrentUserName());
 
-        if (getCurrentUser(userService).isAdmin()) {
+        if (isAdmin(userService)) {
             return "redirect:/admin-homepage.html";
 
         } else {

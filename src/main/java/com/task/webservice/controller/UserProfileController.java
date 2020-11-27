@@ -25,17 +25,23 @@ public class UserProfileController extends AbstractController {
         return "user-profile.html";
     }
 
+    @RequestMapping(value = {"/adminProfile.html", "/admin-profile.html"})
+    public String viewProfileAdmin(Model model) {
+        addCommonAttributes(userService, model);
+        return  isAdmin(userService) ? "admin/profile.html" : "user-profile.html";
+    }
+
     @RequestMapping(value = "/profileUpdate", method = RequestMethod.POST)
     public String profileUpdate(@ModelAttribute("profile") Profile updatedProfile) {
         profileService.updateProfileData(getCurrentUserName(), updatedProfile);
         userService.recordProfileUpdate(getCurrentUserName());
-        return "redirect:/user-profile.html";
+        return isAdmin(userService) ? "redirect:/admin-profile.html" : "redirect:/user-profile.html";
     }
 
     @RequestMapping(value = "/profileDelete", method = RequestMethod.POST)
     public String profileDelete(@ModelAttribute("profile") Profile updatedProfile) {
         profileService.deleteProfileData(getCurrentUserName(), updatedProfile);
         userService.recordProfileUpdate(getCurrentUserName());
-        return "redirect:/user-profile.html";
+        return isAdmin(userService) ? "redirect:/admin-profile.html" : "redirect:/user-profile.html";
     }
 }
