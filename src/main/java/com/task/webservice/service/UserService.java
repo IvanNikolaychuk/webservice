@@ -1,6 +1,7 @@
 package com.task.webservice.service;
 
 import com.task.webservice.model.Profile;
+import com.task.webservice.model.Role;
 import com.task.webservice.model.User;
 import com.task.webservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,9 +91,24 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void remove(User user) {
-        if (user != null) {
-            userRepository.delete(user);
+    public void remove(User userToBeDeleted) {
+        if (userToBeDeleted != null) {
+            userRepository.delete(userToBeDeleted);
+            if (userToBeDeleted.isAdmin()) {
+                User admin = randomAdminUser();
+                if (admin.getMessages() == null) {
+                    admin.setMessages(new ArrayList<>());
+                }
+                admin.getMessages().addAll(userToBeDeleted.getMessages());
+                userRepository.save(admin);
+            }
+
         }
+    }
+
+    private User randomAdminUser() {
+        List<User> admins = userRepository.findByRole(Role.ROLE_ADMIN.name());
+        Collections.shuffle(admins);
+        return admins.get(0);
     }
 }
