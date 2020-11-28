@@ -66,6 +66,7 @@ public class ProfileService {
         if (profileOptional.isPresent()) {
             Profile profile = profileOptional.get();
             profile.setAddress(updatedProfile.getAddress());
+            profile.setEmail(updatedProfile.getEmail());
             profile.setPostalCode(updatedProfile.getPostalCode());
             profile.setDefaultBillingAddress(updatedProfile.isDefaultBillingAddress());
             profile.setDefaultShippingAddress(updatedProfile.isDefaultShippingAddress());

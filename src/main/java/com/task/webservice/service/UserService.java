@@ -3,6 +3,7 @@ package com.task.webservice.service;
 import com.task.webservice.model.Profile;
 import com.task.webservice.model.Role;
 import com.task.webservice.model.User;
+import com.task.webservice.repository.MessageRepository;
 import com.task.webservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     public UserService() {
         super();
@@ -96,10 +100,12 @@ public class UserService {
             userRepository.delete(userToBeDeleted);
             if (userToBeDeleted.isAdmin()) {
                 User admin = randomAdminUser();
-                if (admin.getMessages() == null) {
-                    admin.setMessages(new ArrayList<>());
-                }
-                admin.getMessages().addAll(userToBeDeleted.getMessages());
+
+                messageRepository.findByReceiverId(userToBeDeleted.getId())
+                        .forEach(message -> {
+                            message.setReceiverId(admin.getId());
+                            messageRepository.save(message);
+                        });
                 userRepository.save(admin);
             }
 

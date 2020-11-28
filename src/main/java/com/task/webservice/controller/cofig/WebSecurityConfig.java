@@ -31,17 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         User admin = new User("admin@isp.net", "{noop}P@ssword1");
         admin.setRole(Role.ROLE_ADMIN.name());
-        admin.setFirstName("admin");
-        admin.setLastName("admin");
-        admin.setAddress("address");
+        admin.setFirstName("AdminFirstName");
+        admin.setLastName("AdminLastName");
+        admin.setAddress("Address");
 
         userService.saveNewUser(admin);
 
-        User user = new User("user", "{noop}user");
+        User user = new User("user@isp.net", "{noop}P@ssword1");
         user.setRole(Role.ROLE_USER.name());
-        user.setFirstName("user");
-        user.setLastName("user");
-        user.setAddress("address");
+        user.setFirstName("UserFirstName");
+        user.setLastName("UserLastName");
+        user.setAddress("Address");
 
         userService.saveNewUser(user);
 

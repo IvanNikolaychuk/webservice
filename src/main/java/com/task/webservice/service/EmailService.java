@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 @Service
 public class EmailService {
     private static final Logger LOGGER = Logger.getLogger(EmailService.class.getName());
-
+// asdasd!A
     public void sendEmailUponUserRegistration(User user) {
         LOGGER.info("Sending registration email to: " + user.getUsername());
     }

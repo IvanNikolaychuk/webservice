@@ -33,10 +33,10 @@ public class UserController extends AbstractController {
             user.setEnabled(true);
             userService.saveNewUser(user);
             emailService.sendEmailUponUserRegistration(user);
-            return "redirect:/";
+            return "redirect:/login.html";
         }
 
-        return "redirect:/";
+        return "redirect:/login.html";
     }
 
 }

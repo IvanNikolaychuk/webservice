@@ -35,10 +35,11 @@
             <button class="btn btn-lg btn-primary" type="submit">Reply to message</button>
         </form>
         <br>
-        <form class="form-signin" method="post" th:action="@{/removeMessage}" action="#">
+        <form class="form-signin" method="post" th:action="@{/removeMessageAdmin}" action="#">
             <input name="id" th:value="${senderToMessage.getRight().id}" hidden th:object="${newMessage}">
             <button class="btn btn-lg btn-primary btn-danger" type="submit">Remove</button>
         </form>
+        <br>
     </tr>
 </div>
 

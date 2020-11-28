@@ -30,7 +30,7 @@ public class UserManagerController extends AbstractController {
     public String removeUser(@ModelAttribute("user") User user) {
         userService.remove(userService.findByEmail(user.getUsername()));
 
-        return "admin/user-managing.html";
+        return "redirect:/adminUserManaging.html";
     }
 
 }

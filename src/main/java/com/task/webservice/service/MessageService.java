@@ -139,4 +139,26 @@ public class MessageService {
                     });
         }
     }
+
+    public List<Message> findAnsweredMessages(Long userId) {
+        List<Message> messages = new ArrayList<>();
+
+        userRepository
+                .findById(userId)
+                .ifPresent(user -> {
+                    List<Message> answeredMessages = user.getMessages().stream()
+                            .filter(Message::isReplied)
+                            .collect(Collectors.toList());
+                    messages.addAll(answeredMessages);
+                });
+
+        return messages;
+    }
+
+    public void markAsRead(List<Message> messages) {
+        messages.forEach(message -> {
+            message.setStatus(Message.Status.READ);
+            messageRepository.save(message);
+        });
+    }
 }
