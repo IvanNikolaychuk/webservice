@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UserManagerController extends AbstractController {
         return "admin/user-managing.html";
     }
 
-    @RequestMapping(value = {"/removeUser"})
+    @RequestMapping(value = {"/removeUser"}, method = RequestMethod.POST)
     public String removeUser(@ModelAttribute("user") User user) {
         userService.remove(userService.findByEmail(user.getUsername()));
 

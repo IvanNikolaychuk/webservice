@@ -1,9 +1,6 @@
 package com.task.webservice.service;
 
-import com.task.webservice.model.Message;
-import com.task.webservice.model.Profile;
-import com.task.webservice.model.Role;
-import com.task.webservice.model.User;
+import com.task.webservice.model.*;
 import com.task.webservice.repository.MessageRepository;
 import com.task.webservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.task.webservice.model.Message.Status.SENT;
 
@@ -44,6 +43,18 @@ public class MessageService {
 
             sender.getMessages().add(message);
             userRepository.save(sender);
+        }
+    }
+
+    public void remove(Message messageToBeDeleted) {
+        if (messageToBeDeleted != null) {
+            messageRepository.findById(messageToBeDeleted.getId()).ifPresent(message -> {
+                userRepository.findById(message.getSenderId()).ifPresent(sender -> {
+                    sender.getMessages().remove(message);
+                    userRepository.save(sender);
+                });
+                messageRepository.delete(message);
+            });
         }
     }
 
@@ -106,8 +117,26 @@ public class MessageService {
         return admins.get(0);
     }
 
-    List<Message> findByReceiverId(Long receiverId) {
+    public List<Message> findByReceiverId(Long receiverId) {
         return messageRepository.findByReceiverId(receiverId);
     }
 
+
+    public List<Pair<User, Message>> findUnansweredMessages(Long receiverId) {
+        return messageRepository.findByReceiverId(receiverId)
+                .stream()
+                .filter(message -> !message.isReplied())
+                .map(message -> new Pair<>(userRepository.findById(message.getSenderId()).get(), message))
+                .collect(Collectors.toList());
+    }
+
+    public void replyTo(Message message) {
+        if (message != null) {
+            messageRepository.findById(message.getId())
+                    .ifPresent(msg -> {
+                        msg.setReply(message.getReply());
+                        messageRepository.save(msg);
+                    });
+        }
+    }
 }

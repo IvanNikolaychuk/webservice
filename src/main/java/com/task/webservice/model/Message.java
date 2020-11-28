@@ -1,6 +1,7 @@
 package com.task.webservice.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "messages")
@@ -14,7 +15,7 @@ public class Message {
     private String text;
     private String subject;
     private String reply;
-    private Status status;
+    private Status senderStatus;
 
     public Long getId() {
         return id;
@@ -46,14 +47,15 @@ public class Message {
 
     public void setReply(String reply) {
         this.reply = reply;
+        this.senderStatus = Status.UNREAD;
     }
 
     public Status getStatus() {
-        return status;
+        return senderStatus;
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        this.senderStatus = status;
     }
 
     public Long getReceiverId() {
@@ -78,5 +80,24 @@ public class Message {
 
     public enum Status {
         SENT, READ, UNREAD
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(id, message.id) &&
+                Objects.equals(receiverId, message.receiverId) &&
+                Objects.equals(senderId, message.senderId) &&
+                Objects.equals(text, message.text) &&
+                Objects.equals(subject, message.subject) &&
+                Objects.equals(reply, message.reply) &&
+                senderStatus == message.senderStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, receiverId, senderId, text, subject, reply, senderStatus);
     }
 }

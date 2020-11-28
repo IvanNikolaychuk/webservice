@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>User Managing</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#header").load("/admin-header.html");
+		});
+	</script>
+</head>
+<body>
+
+<div id="header"></div>
+<div class="container" >
+	<h1 class="center">Message Reply</h1>
+	<input name="id" th:value="${message}" hidden th:object="${message}">
+	<p class="list-group-item">
+		From user: <span th:text="${senderToMessage.getLeft().username}"></span>
+	</p>
+	<br>
+	<p class="list-group-item">
+		Subject: <span th:text="${senderToMessage.getRight().subject}"></span>
+	</p>
+	<br>
+	<p class="list-group-item">
+		Message: <span th:text="${senderToMessage.getRight().text}"></span>
+	</p>
+	<br>
+	<br>
+	<form class="form-signin" method="post" th:action="@{/replyOnMessage}" action="#" th:object="${newMessage}">
+		<h3>Reply:</h3>
+		<br>
+		<textarea class="email-field form-control" name="reply" placeholder="Message" required="" autofocus="">
+		</textarea>
+		<br><br>
+
+		<input name="id" th:value="${senderToMessage.getRight().id}" hidden >
+		<button class="btn btn-lg btn-primary" type="submit">Reply to message</button>
+	</form>
+	<br>
+</div>
+
+</body>
+</html>
